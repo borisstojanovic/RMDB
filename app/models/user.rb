@@ -3,6 +3,10 @@ class User < ApplicationRecord
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
+
+  has_many :favorite_movies
+  has_many :favorites, through: :favorite_movies, source: :movie
+
   def username
     email.split("@")[0].capitalize
   end

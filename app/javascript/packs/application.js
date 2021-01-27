@@ -16,3 +16,6 @@ ActiveStorage.start()
 
 
 global.$ = jQuery;
+
+require("trix")
+require("@rails/actiontext")
