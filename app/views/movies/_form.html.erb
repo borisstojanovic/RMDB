@@ -15,7 +15,7 @@
     <%= f.label "Title: "%>
     <%= f.text_field :title, class:'form-control string' %>
     <%= f.label "Release Date: "%>
-    <%= f.date_select :release_date, class:'form-control date' %>
+    <%= f.date_select :release_date, class:'form-control date', start_year: Date.today.year, end_year: Date.today.year - 100 %>
     <br>
     <%= f.label :thumbnail %>
     <%= f.file_field :thumbnail %>

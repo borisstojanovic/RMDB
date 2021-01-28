@@ -1,12 +1,17 @@
 class ApplicationController < ActionController::Base
   helper_method :is_admin!
 
-  private
+  helper_method :is_authorized!
 
-  def is_admin!
+  private
+  def is_authorized!
     if helpers.is_user_admin!
     else
       redirect_to root_path
     end
+  end
+
+  def is_admin!
+    helpers.is_user_admin!
   end
 end

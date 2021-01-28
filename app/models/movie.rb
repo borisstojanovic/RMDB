@@ -1,6 +1,9 @@
 class Movie < ApplicationRecord
-  has_many :favorite_movies
+  has_many :favorite_movies, dependent: :destroy
   has_many :favorited_by, through: :favorite_movies, source: :user
+  has_many :roles, dependent: :destroy
+  has_many :acted_in_by, through: :roles, source: :actor
+  has_many :reviews, dependent: :destroy
 
   has_one_attached :thumbnail
   has_one_attached :banner

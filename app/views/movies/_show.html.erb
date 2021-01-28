@@ -1,0 +1,29 @@
+<div class="col">
+  <div class="card mb-4" style="max-width: 24rem;">
+    <img class="card-img-top" src="<%= url_for movie.optimized_image(movie.thumbnail, 300, 150) %>" alt="Movie Image Card" />
+    <div class="card-body">
+      <h5 class="card-title">
+        <%= link_to movie.title, movie %>
+      </h5>
+      <p class="card-text">
+        <%= movie.description.to_plain_text.truncate_words(25) %>
+      </p>
+      <p class="card-text">
+        <small class="text-muted">
+          <%= movie.release_date.strftime("%A, %B %e, %Y") %>|
+          <%= pluralize(movie.views, "View") %> |
+          <% if current_user&.admin %>
+            <%= link_to "Delete", movie, method: :delete %>
+          <%else if current_user %>
+              <% if !is_favorite(movie) %>
+                <%= link_to "Favorite",  favorite_path(movie: movie.id, type: "favorite"), method: :put %>
+              <% else %>
+                <%= link_to "Unfavorite", favorite_path(movie: movie.id, type: "unfavorite"), method: :put %>
+              <% end %>
+            <% end %>
+          <% end %>
+        </small>
+      </p>
+    </div>
+  </div>
+</div>

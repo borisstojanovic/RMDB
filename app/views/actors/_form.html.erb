@@ -1,0 +1,18 @@
+
+<%= simple_form_for(@actor) do |f| %>
+  <%= f.error_notification %>
+  <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
+
+  <div class="form-inputs">
+    <%= f.input :firstname %>
+    <%= f.input :lastname %>
+    <%= f.date_select :date_of_birth, start_year: Date.today.year, end_year: Date.today.year - 200 %>
+    <%= f.error_notification message: f.object.errors[:date_of_birth].to_sentence if f.object.errors[:date_of_birth].present?%>
+    <br>
+    <%= f.input :bio %>
+  </div>
+
+  <div class="form-actions">
+    <%= f.button :submit %>
+  </div>
+<% end %>

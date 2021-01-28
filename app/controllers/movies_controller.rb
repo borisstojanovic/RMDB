@@ -1,7 +1,7 @@
 class MoviesController < ApplicationController
-  before_action :set_movie, only: %i[ show edit update destroy ]
+  before_action :set_movie, only: %i[ show edit update destroy role ]
   before_action :authenticate_user!, except: [:index, :show]
-  before_action :is_admin!, except: [:index, :show, :favorite]
+  before_action :is_authorized!, except: [:index, :show, :favorite]
 
   # GET /movies or /movies.json
   def index
@@ -13,6 +13,7 @@ class MoviesController < ApplicationController
     views = @movie.views + 1
     @movie.update(views: views)
     @reviews = Review.where(movie_id: @movie.id).order("created_at DESC")
+    @num_reviews = @movie.reviews.count
   end
 
   # GET /movies/new
@@ -77,6 +78,13 @@ class MoviesController < ApplicationController
       # Type missing, nothing happens
       redirect_to movies_url, notice: 'Nothing happened.'
     end
+  end
+
+  #add role to movie
+  def role
+    actor = Actor.find(params[:actor])
+    @movie.acted_in_by << actor
+    redirect_to movies_url, notice: "Added Role Successfully"
   end
 
 

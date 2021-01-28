@@ -1,7 +1,7 @@
 class ReviewsController < ApplicationController
   before_action :set_review, only: [:show, :edit, :update, :destroy]
   before_action :set_movie
-  before_action :authenticate_user!
+  before_action :authenticate_user!, except: [:show]
 
 
   def create
@@ -39,7 +39,7 @@ class ReviewsController < ApplicationController
     @review.user = current_user
     respond_to do |format|
       if @review.update(review_params)
-        format.html { redirect_to movie_path(@movie), notice: "Review was successfully updated." }
+        format.html { redirect_to movie_path(@movie) }
         format.json { render :show, status: :ok, location: movie_path(@movie) }
       else
         format.html { redirect_to edit_movie_review_path(@movie, id: @review), notice: @review.errors, method: :get }

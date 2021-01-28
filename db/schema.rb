@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_01_27_171807) do
+ActiveRecord::Schema.define(version: 2021_01_28_101650) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -51,6 +51,15 @@ ActiveRecord::Schema.define(version: 2021_01_27_171807) do
     t.bigint "blob_id", null: false
     t.string "variation_digest", null: false
     t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
+  end
+
+  create_table "actors", force: :cascade do |t|
+    t.string "firstname"
+    t.string "lastname"
+    t.date "date_of_birth"
+    t.text "bio"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
   end
 
   create_table "comments", force: :cascade do |t|
@@ -94,6 +103,15 @@ ActiveRecord::Schema.define(version: 2021_01_27_171807) do
     t.index ["user_id"], name: "index_reviews_on_user_id"
   end
 
+  create_table "roles", force: :cascade do |t|
+    t.bigint "actor_id", null: false
+    t.bigint "movie_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["actor_id"], name: "index_roles_on_actor_id"
+    t.index ["movie_id"], name: "index_roles_on_movie_id"
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
@@ -113,4 +131,6 @@ ActiveRecord::Schema.define(version: 2021_01_27_171807) do
   add_foreign_key "comments", "users"
   add_foreign_key "reviews", "movies"
   add_foreign_key "reviews", "users"
+  add_foreign_key "roles", "actors"
+  add_foreign_key "roles", "movies"
 end
