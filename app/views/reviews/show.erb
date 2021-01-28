@@ -1,0 +1,11 @@
+<%= render 'reviews/show', review: @review, details: true %>
+
+<div class="container">
+  <%= render 'comments/form', commentable: @review, local: Comment.new %>
+
+  <div id="comment-pane">
+    <% @comments.each do |comment| %>
+      <%= render comment %>
+    <% end %>
+  </div>
+</div>

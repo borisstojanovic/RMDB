@@ -15,6 +15,8 @@ class Movie < ApplicationRecord
   validates :banner, attached: true, content_type: %w[image/png image/jpg image/jpeg]
 
   self.per_page = 8
+  extend FriendlyId
+  friendly_id :title, use: :slugged
 
   def optimized_image(image,x,y)
     image.variant(resize_to_fill: [x, y]).processed

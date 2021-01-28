@@ -4,18 +4,19 @@
 // that code so it'll be compiled.
 
 import Rails from "@rails/ujs"
+Rails.start()
 import Turbolinks from "turbolinks"
+Turbolinks.start()
 import * as ActiveStorage from "@rails/activestorage"
+ActiveStorage.start()
 import "channels"
 import "bootstrap"
+import "@fortawesome/fontawesome-free"
 import "./src/application.scss"
-
-Rails.start()
-Turbolinks.start()
-ActiveStorage.start()
+require("/app/javascript/packs/raty")
+require('jquery')
 
 
 global.$ = jQuery;
-
 require("trix")
 require("@rails/actiontext")

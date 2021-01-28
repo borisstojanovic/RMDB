@@ -1,0 +1,35 @@
+
+  <div class="col">
+    <div class="card mb-4" style="max-width: 30rem;">
+      <div class="card-body">
+        <h5 class="card-title">
+          <% if review.score  %>
+            <% review.score.times do %>
+              <span class="fa fa-star"></span>
+            <% end %>
+          <% else %>
+            <label>No Rating</label>
+          <% end %>
+        </h5>
+        <% if !details %>
+          <p class="card-text">
+            <%= review.body.to_plain_text.truncate_words(25) %>
+          </p>
+        <% else %>
+          <p class="card-text">
+            <%= review.body.to_plain_text %>
+          </p>
+        <% end %>
+        <p class="card-text">
+          <small class="text-muted">
+            <%= review.updated_at.strftime("%A, %B %e, %Y") %>|
+            <% if current_user&.admin or is_reviewer(review)%>
+              <%= link_to "Delete", movie_review_path(@movie, id: review), method: :delete %>|
+              <%= link_to "Edit", edit_movie_review_path(@movie, id: review), method: :get %>|
+            <% end %>
+            <%= link_to "Details", movie_review_path(@movie, id: review), method: :get %>
+          </small>
+        </p>
+      </div>
+    </div>
+  </div>

@@ -6,9 +6,16 @@ class User < ApplicationRecord
 
   has_many :favorite_movies
   has_many :favorites, through: :favorite_movies, source: :movie
+  has_many :comments, dependent: :destroy
 
   def username
     email.split("@")[0].capitalize
+  end
+
+  def comment_created
+    self.number_of_comments = number_of_comments + 1
+    save
+    number_of_comments
   end
 
   def validate_username

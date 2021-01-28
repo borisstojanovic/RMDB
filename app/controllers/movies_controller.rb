@@ -12,6 +12,7 @@ class MoviesController < ApplicationController
   def show
     views = @movie.views + 1
     @movie.update(views: views)
+    @reviews = Review.where(movie_id: @movie.id).order("created_at DESC")
   end
 
   # GET /movies/new
@@ -62,10 +63,8 @@ class MoviesController < ApplicationController
 
   # Set favorite movie for current user
   def favorite
-    puts('\n\n\n\n\n\n\\n\n\n\n\n\n\\n\n\n\n\n\\n\n\n\n')
     @movie = Movie.find(params[:movie])
     type = params[:type]
-    puts(type)
     if type == "favorite"
       current_user.favorites << @movie
       redirect_to movies_url, notice: "You favorited #{@movie.title}"
@@ -84,7 +83,7 @@ class MoviesController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_movie
-      @movie = Movie.find(params[:id])
+      @movie = Movie.friendly.find(params[:id])
     end
 
     # Only allow a list of trusted parameters through.

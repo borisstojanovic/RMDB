@@ -20,4 +20,17 @@
       </div>
     </div>
   </div>
+  <% if @reviews.blank? %>
+    <h3>No reviews just yet, would you like to add the first!</h3>
+    <%= link_to "Write Review", new_movie_review_path(@movie), method: :get, class: "btn btn-danger" %>
+  <% else %>
+    <%= link_to "Write Review", new_movie_review_path(@movie), method: :get, class: "btn btn-danger" %>
+    <% @reviews.each_slice(4) do |reviews| %>
+      <div class="row">
+        <% reviews.each do |review|%>
+          <%= render 'reviews/show', review: review, details: false%>
+        <% end %>
+      </div>
+    <% end %>
+  <% end %>
 </div>

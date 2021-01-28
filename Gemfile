@@ -33,6 +33,8 @@ gem 'will_paginate'
 gem 'friendly_id'
 gem 'active_storage_validations'
 gem 'validates_timeliness', '~> 5.0.0.beta1'
+gem "font-awesome-rails"
+gem 'jquery-rails'
 #my gems end
 
 # Reduces boot times through caching; required in config/boot.rb
