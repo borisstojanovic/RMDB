@@ -25,4 +25,16 @@ module ReviewsHelper
     end
     false
   end
+
+  def num_helpful(review)
+    Helpful.where(review_id: review.id, is_helpful: "helpful").count
+  end
+
+  def num_unhelpful(review)
+    Helpful.where(review_id: review.id, is_helpful: "unhelpful").count
+  end
+
+  def num_total(review)
+    Helpful.where(review_id: review.id).count
+  end
 end

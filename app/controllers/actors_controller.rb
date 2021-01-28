@@ -2,38 +2,43 @@ class ActorsController < ApplicationController
   before_action :set_actor, only: %i[ show edit update destroy ]
   before_action :authenticate_user!, except: [:index, :show]
   before_action :is_authorized!, except: %i[index show]
+  before_action :per_page, only: [:index]
 
   # GET /actors or /actors.json
   def index
-    @actors = Actor.all
+    @actors = Actor.search_actor(params[:search]).order('created_at DESC')
+    actors = []
     if params[:movie]
       @movie = Movie.friendly.find(params[:movie])
-      actors = []
       @role = params[:role]
       @list = params[:list]
       if @list == "true"
         @actors.each { |actor|
           if actor.has_acted(@movie)
-            actors.append(actor)
+            actors.append(actor.id)
           end
         }
       elsif @role == "true"
         @actors.each { |actor|
           unless actor.has_acted(@movie)
-            actors.append(actor)
+            actors.append(actor.id)
           end
         }
       else
         if @movie.directed_by
           redirect_to movie_path(@movie)
         else
-          actors = @actors
+          @actors.each { |actor|
+              actors.append(actor.id)
+          }
         end
       end
-
-      @actors = actors
-      puts(@actors)
+    else
+      @actors.each { |actor|
+        actors.append(actor.id)
+      }
     end
+    @actors = Actor.find(actors).paginate(page: params[:page], per_page: @per_page)
   end
 
   # GET /actors/1 or /actors/1.json
@@ -95,5 +100,9 @@ class ActorsController < ApplicationController
     # Only allow a list of trusted parameters through.
     def actor_params
       params.require(:actor).permit(:firstname, :lastname, :date_of_birth, :bio)
+    end
+
+    def per_page
+      @per_page = params[:per_page]?params[:per_page]:5
     end
 end

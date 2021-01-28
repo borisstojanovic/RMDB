@@ -14,7 +14,7 @@
   </div>
 
   <div>
-    <% @articles.each_slice(3) do |articles| %>
+    <% @articles.each_slice(2) do |articles| %>
       <div class="row">
         <% articles.each do |article|%>
           <%= render 'articles/show', article: article %>

@@ -23,6 +23,10 @@
         <p class="card-text">
           <small class="text-muted">
             <%= review.updated_at.strftime("%A, %B %e, %Y") %>|
+            <%= pluralize(num_helpful(review), "") %>
+            <label> out of </label>
+            <%= pluralize(num_total(review), "") %>
+            <label>users found review helpful</label>
             <% if current_user&.admin or is_reviewer(review)%>
               <%= link_to "Delete", movie_review_path(@movie, id: review), method: :delete %>|
               <%= link_to "Edit", edit_movie_review_path(@movie, id: review), method: :get %>|

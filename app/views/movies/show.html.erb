@@ -10,7 +10,8 @@
         <%= link_to @movie.title, root_path %>
       </h1>
       <p class="lead">
-        <%= @movie.updated_at.strftime("%A, %B %e, %Y") %> | <%= pluralize(@movie.views, "View") %> |
+        <label>Release Date: </label>
+        <%= @movie.release_date.strftime("%A, %B %e, %Y") %> | <%= pluralize(@movie.views, "View") %> |
         <%= pluralize(@num_reviews, "Reviews") %> |
         <% if current_user&.admin%>
           <%= link_to "Delete", @movie, method: :delete %>
@@ -23,7 +24,8 @@
       <div>
 
         <% if @movie.director %>
-          <label>Director</label>
+          <br>
+          <label>Director: </label>
           <%= link_to (@movie.directed_by.firstname + " " + @movie.directed_by.lastname) , actor_path(@movie.directed_by), method: :get %>
         <% end %>
         <br>

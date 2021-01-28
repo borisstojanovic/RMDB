@@ -26,3 +26,12 @@
       <% end %>
     </div>
   <% end %>
+
+  <h4>Directed: </h4>
+  <% actor.directed.each_slice(4) do |movies| %>
+    <div class="row">
+      <% for movie in movies %>
+        <%= render 'movies/show', movie: movie %>
+      <% end %>
+    </div>
+  <% end %>

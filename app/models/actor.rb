@@ -12,7 +12,7 @@ class Actor < ApplicationRecord
 
   validate :past_date
 
-
+  self.per_page = 6
 
   def past_date
     if date_of_birth >= Date.current
@@ -32,6 +32,18 @@ class Actor < ApplicationRecord
       return true
     end
     false
+  end
+
+  def self.search_actor(search)
+    if search
+      if search.kind_of? String and !search.to_s.empty?
+        self.where('firstname like ? or lastname like ?', "%#{search}%", "%#{search}%")
+      else
+        Actor.all
+      end
+    else
+      Actor.all
+    end
   end
 
 end
