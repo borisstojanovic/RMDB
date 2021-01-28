@@ -1,5 +1,5 @@
 class MoviesController < ApplicationController
-  before_action :set_movie, only: %i[ show edit update destroy role ]
+  before_action :set_movie, only: %i[ show edit update destroy role direct ]
   before_action :authenticate_user!, except: [:index, :show]
   before_action :is_authorized!, except: [:index, :show, :favorite]
 
@@ -84,9 +84,16 @@ class MoviesController < ApplicationController
   def role
     actor = Actor.find(params[:actor])
     @movie.acted_in_by << actor
-    redirect_to movies_url, notice: "Added Role Successfully"
+    redirect_to movie_url(@movie), notice: "Added Role Successfully"
   end
 
+  #add director to movie
+  def direct
+    actor = Actor.find(params[:actor])
+    @movie.directed_by = actor
+    @movie.save
+    redirect_to movies_url, notice: "Added Director Successfully"
+  end
 
   private
     # Use callbacks to share common setup or constraints between actions.

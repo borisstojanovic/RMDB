@@ -5,6 +5,9 @@ class Movie < ApplicationRecord
   has_many :acted_in_by, through: :roles, source: :actor
   has_many :reviews, dependent: :destroy
 
+  has_one :director, dependent: :destroy
+  has_one :directed_by, through: :director, source: :actor
+
   has_one_attached :thumbnail
   has_one_attached :banner
 

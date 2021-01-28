@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :articles
   resources :actors
 
   resources :movies do
@@ -19,8 +20,9 @@ Rails.application.routes.draw do
   root 'movies#index'
   get 'about', to: 'pages#about'
   get 'history', to: 'comments#history'
-  get 'search', to: 'movies#search'
   put 'favorite', to: 'movies#favorite'
+  put 'helpful', to: 'reviews#helpful'
   put 'role', to: 'movies#role'
+  put 'direct', to: 'movies#direct'
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
 end

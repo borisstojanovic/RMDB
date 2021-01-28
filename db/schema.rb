@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_01_28_101650) do
+ActiveRecord::Schema.define(version: 2021_01_28_172951) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -62,6 +62,15 @@ ActiveRecord::Schema.define(version: 2021_01_28_101650) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
+  create_table "articles", force: :cascade do |t|
+    t.string "title"
+    t.integer "views"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.string "slug"
+    t.index ["slug"], name: "index_articles_on_slug", unique: true
+  end
+
   create_table "comments", force: :cascade do |t|
     t.text "edit_history"
     t.integer "commentable_id"
@@ -74,11 +83,30 @@ ActiveRecord::Schema.define(version: 2021_01_28_101650) do
     t.index ["user_id"], name: "index_comments_on_user_id"
   end
 
+  create_table "directors", force: :cascade do |t|
+    t.bigint "actor_id", null: false
+    t.bigint "movie_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["actor_id"], name: "index_directors_on_actor_id"
+    t.index ["movie_id"], name: "index_directors_on_movie_id"
+  end
+
   create_table "favorite_movies", force: :cascade do |t|
     t.integer "movie_id"
     t.integer "user_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "helpfuls", force: :cascade do |t|
+    t.bigint "review_id", null: false
+    t.bigint "user_id", null: false
+    t.string "is_helpful", default: "helpful"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["review_id"], name: "index_helpfuls_on_review_id"
+    t.index ["user_id"], name: "index_helpfuls_on_user_id"
   end
 
   create_table "movies", force: :cascade do |t|
@@ -129,6 +157,10 @@ ActiveRecord::Schema.define(version: 2021_01_28_101650) do
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "comments", "users"
+  add_foreign_key "directors", "actors"
+  add_foreign_key "directors", "movies"
+  add_foreign_key "helpfuls", "reviews"
+  add_foreign_key "helpfuls", "users"
   add_foreign_key "reviews", "movies"
   add_foreign_key "reviews", "users"
   add_foreign_key "roles", "actors"

@@ -9,12 +9,30 @@ class ActorsController < ApplicationController
     if params[:movie]
       @movie = Movie.friendly.find(params[:movie])
       actors = []
-      for actor in @actors do
-        unless actor.has_acted(@movie)
-          actors.append(actor)
+      @role = params[:role]
+      @list = params[:list]
+      if @list == "true"
+        @actors.each { |actor|
+          if actor.has_acted(@movie)
+            actors.append(actor)
+          end
+        }
+      elsif @role == "true"
+        @actors.each { |actor|
+          unless actor.has_acted(@movie)
+            actors.append(actor)
+          end
+        }
+      else
+        if @movie.directed_by
+          redirect_to movie_path(@movie)
+        else
+          actors = @actors
         end
       end
+
       @actors = actors
+      puts(@actors)
     end
   end
 

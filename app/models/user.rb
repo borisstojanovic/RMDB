@@ -8,6 +8,8 @@ class User < ApplicationRecord
   has_many :favorites, through: :favorite_movies, source: :movie
   has_many :comments, dependent: :destroy
   has_many :reviews, dependent: :destroy
+  has_many :helpfuls, dependent: :destroy
+  has_many :helpful_reviews, through: :helpfuls, source: :review
 
   def username
     email.split("@")[0].capitalize

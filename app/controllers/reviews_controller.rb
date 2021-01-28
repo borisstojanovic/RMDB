@@ -1,5 +1,5 @@
 class ReviewsController < ApplicationController
-  before_action :set_review, only: [:show, :edit, :update, :destroy]
+  before_action :set_review, only: [:show, :edit, :update, :destroy, :helpful]
   before_action :set_movie
   before_action :authenticate_user!, except: [:show]
 
@@ -54,6 +54,39 @@ class ReviewsController < ApplicationController
     respond_to do |format|
       format.html { redirect_to movie_path(movie), notice: "Review was successfully destroyed." }
       format.json { head :no_content }
+    end
+  end
+
+  def helpful
+    type = params[:type]
+    if type == "helpful"
+      helpful = Helpful.where(user_id: current_user.id, review_id: @review.id)
+      if helpful.any?
+        helpful.update(is_helpful:type)
+      else
+        helpful = Helpful.new
+        helpful.user_id = current_user.id
+        helpful.review_id = @review.id
+        helpful.is_helpful = type
+        helpful.save
+      end
+      redirect_to movie_url(@movie), notice: "Review marked as helpful"
+
+    elsif type == "unhelpful"
+      helpful = Helpful.where(user_id: current_user.id, review_id: @review.id)
+      if helpful.any?
+        helpful.update(is_helpful:type)
+      else
+        helpful = Helpful.new
+        helpful.user_id = current_user.id
+        helpful.review_id = @review.id
+        helpful.is_helpful = type
+        helpful.save
+      end
+      redirect_to movie_url(@movie), notice: "Review marked as unhelpful"
+    else
+      # Type missing, nothing happens
+      redirect_to movie_url(@movie), notice: 'Nothing happened.'
     end
   end
 
