@@ -1,11 +1,11 @@
 
-<%= form_with model: movie do |f| %>
-  <% if movie.errors.any? %>
+<%= form_with model: article do |f| %>
+  <% if article.errors.any? %>
     <div id="error_explanation">
-      <h2><%= pluralize(movie.errors.count, "error") %> prohibited this movie from being saved:</h2>
+      <h2><%= pluralize(article.errors.count, "error") %> prohibited this article from being saved:</h2>
 
       <ul>
-        <% movie.errors.full_messages.each do |message| %>
+        <% article.errors.full_messages.each do |message| %>
           <li><%= message %></li>
         <% end %>
       </ul>
@@ -22,7 +22,7 @@
     <%= f.file_field :banner %>
     <br>
     <%= f.label "Body: "%>
-    <%= f.rich_text_area :description %>
+    <%= f.rich_text_area :body %>
   </div>
 
   <div class="form-actions">

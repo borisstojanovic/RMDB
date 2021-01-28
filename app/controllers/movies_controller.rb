@@ -92,7 +92,7 @@ class MoviesController < ApplicationController
     actor = Actor.find(params[:actor])
     @movie.directed_by = actor
     @movie.save
-    redirect_to movies_url, notice: "Added Director Successfully"
+    redirect_to movie_url(@movie), notice: "Added Director Successfully"
   end
 
   private

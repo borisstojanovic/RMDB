@@ -29,15 +29,16 @@
         <br>
         <%= link_to 'Cast', actors_path(movie: @movie, list: true, role: false), method: :get %>
       </div>
+      <% if is_admin! %>
+        <%= link_to "Add Actor", actors_path(movie: @movie, list:false, role: true), method: :get %>
+        <% if @movie.director %>
+        <% else %>
+          <%= link_to "Add Director", actors_path(movie: @movie, list:false, role: false), method: :get %>
+        <% end %>
+      <% end %>
     </div>
   </div>
-  <% if is_admin! %>
-    <%= link_to "Add Actor", actors_path(movie: @movie, list:false, role: true), method: :get %>
-    <% if @movie.director %>
-    <% else %>
-        <%= link_to "Add Director", actors_path(movie: @movie, list:false, role: false), method: :get %>
-    <% end %>
-  <% end %>
+
   <% if @reviews.blank? %>
     <h3>No reviews just yet, would you like to add the first!</h3>
     <%= link_to "Write Review", new_movie_review_path(@movie), method: :get, class: "btn btn-danger" %>

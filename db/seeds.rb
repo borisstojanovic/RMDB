@@ -31,8 +31,8 @@ pseudo_rng = Random.new
   article = Article.new
   article.title = Faker::Lorem.sentence(word_count: 3, random_words_to_add: 7)
   article.body = Faker::Lorem.paragraph_by_chars(number: 1500)
-  article.thumbnail.attach(io: open('https://picsum.photos/640/480'), filename: "#{i}_thumbnail.jpg")
-  article.banner.attach(io: open('https://picsum.photos/1920/1080'), filename: "#{i}_banner.jpg")
+  article.thumbnail.attach(io: URI.open('http://picsum.photos/640/480'), filename: "#{i}_thumbnail.jpg")
+  article.banner.attach(io: URI.open('http://picsum.photos/1920/1080'), filename: "#{i}_banner.jpg")
   article.views = Faker::Number.between(from: 1, to: 5000)
   article.save
 end
@@ -51,6 +51,7 @@ if Movie.count.zero?
       review = Review.new
       review.body = Faker::Lorem.paragraph_by_chars(number: 1500)
       review.user = User.find(2 + pseudo_rng.rand(10))
+      review.score = pseudo_rng.rand(5)
       review.movie = movie
       review.save
       (2 + pseudo_rng.rand(8)).times do |_l|
@@ -105,8 +106,8 @@ end
   end
 end
 
-30.times do |i|
-  user = User.find(i)
+29.times do |i|
+  user = User.find(i+2)
   (2 + pseudo_rng.rand(10)).times do |_j|
     movie = Movie.find(1 + pseudo_rng.rand(25))
     if FavoriteMovie.where(user_id: user.id, movie_id: movie.id).any?

@@ -57,14 +57,14 @@ ActiveRecord::Schema.define(version: 2021_01_28_172951) do
     t.string "firstname"
     t.string "lastname"
     t.date "date_of_birth"
-    t.text "bio"
+    t.text "bio", default: ""
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
 
   create_table "articles", force: :cascade do |t|
     t.string "title"
-    t.integer "views"
+    t.integer "views", default: 0
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.string "slug"
@@ -72,11 +72,11 @@ ActiveRecord::Schema.define(version: 2021_01_28_172951) do
   end
 
   create_table "comments", force: :cascade do |t|
-    t.text "edit_history"
+    t.text "edit_history", default: ""
     t.integer "commentable_id"
     t.string "commentable_type"
     t.bigint "user_id", null: false
-    t.boolean "reply"
+    t.boolean "reply", default: false
     t.integer "comment_number"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
@@ -93,10 +93,12 @@ ActiveRecord::Schema.define(version: 2021_01_28_172951) do
   end
 
   create_table "favorite_movies", force: :cascade do |t|
-    t.integer "movie_id"
-    t.integer "user_id"
+    t.bigint "user_id", null: false
+    t.bigint "movie_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.index ["movie_id"], name: "index_favorite_movies_on_movie_id"
+    t.index ["user_id"], name: "index_favorite_movies_on_user_id"
   end
 
   create_table "helpfuls", force: :cascade do |t|
@@ -159,6 +161,8 @@ ActiveRecord::Schema.define(version: 2021_01_28_172951) do
   add_foreign_key "comments", "users"
   add_foreign_key "directors", "actors"
   add_foreign_key "directors", "movies"
+  add_foreign_key "favorite_movies", "movies"
+  add_foreign_key "favorite_movies", "users"
   add_foreign_key "helpfuls", "reviews"
   add_foreign_key "helpfuls", "users"
   add_foreign_key "reviews", "movies"

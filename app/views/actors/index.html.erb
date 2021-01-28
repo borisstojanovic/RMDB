@@ -24,11 +24,13 @@
         <% if is_admin! %>
           <td><%= link_to 'Edit', edit_actor_path(actor) %></td>
           <td><%= link_to 'Destroy', actor, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-          <% if  @list != "true" %>
-            <% if @role == "true" %>
-              <td><%= link_to 'Add Role', role_path(actor: actor, id: @movie), method: :put %></td>
-            <% else %>
-              <td><%= link_to 'Add Director', direct_path(actor: actor, id: @movie), method: :put %></td>
+          <% if @movie %>
+            <% if  @list != "true" %>
+              <% if @role == "true" %>
+                <td><%= link_to 'Add Role', role_path(actor: actor, id: @movie), method: :put %></td>
+              <% else %>
+                <td><%= link_to 'Add Director', direct_path(actor: actor, id: @movie), method: :put %></td>
+              <% end %>
             <% end %>
           <% end %>
         <% end %>
