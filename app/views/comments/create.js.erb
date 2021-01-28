@@ -1,0 +1,16 @@
+if ("<%= @comment.reply %>" === 'true') {
+    var comment_pane;
+
+    if ("<%= @commentable.comments.count %>" === "0") {
+        comment_pane = "#reply-container-<%=@commentable.id %>";
+    } else {
+        comment_pane = "#reply-<%=@comment.commentable_id %>";
+    }
+
+    $(comment_pane).append("<%= raw j render @comment %>");
+    $(".reply-form-<%= @commentable.id %>").val('');
+} else {
+    $("#comment-pane").prepend("<%= raw j render @comment %>");
+    $(".reply-form-<%= @commentable.id %>").val('');
+}
+$('.trix-button-group--file-tools').remove();
