@@ -1,0 +1,20 @@
+<h1><%=@user.username %></h1>
+
+<h4>
+  <strong>Email: </strong>
+  <%= @user.email %>
+</h4>
+
+<p>
+  <strong>Joined at: </strong>
+  <%= @user.created_at.strftime("%A, %B %e, %Y") %>
+</p>
+
+<h4>Favorite Movies: </h4>
+<% @user.favorites.each_slice(4) do |movies| %>
+  <div class="row">
+    <% for movie in movies %>
+      <%= render 'movies/show', movie: movie %>
+    <% end %>
+  </div>
+<% end %>

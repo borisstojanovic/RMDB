@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  get 'users/index'
   resources :articles
   resources :actors
 
@@ -25,5 +26,8 @@ Rails.application.routes.draw do
   put 'helpful', to: 'reviews#helpful'
   put 'role', to: 'movies#role'
   put 'direct', to: 'movies#direct'
+  get 'users', to: 'users#index'
+  get 'user', to: 'users#show'
+  delete 'user', to: 'users#destroy'
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
 end

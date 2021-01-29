@@ -1,0 +1,20 @@
+<div class="card mb-3" style="max-width: 24rem; outline: aliceblue;">
+  <div class="card-body">
+    <h5 class="card-title">
+      <%= link_to user.username, user_path(id: user) %>
+    </h5>
+    <p class="card-text">
+      <small class="text-muted">
+        <label>Join date: </label>
+        <%= user.created_at.strftime("%A, %B %e, %Y") %> |
+        <%= link_to 'Show', user_path(id: user) %> |
+        <% if is_admin! %>
+          <td><%= link_to 'Edit', edit_user_registration_path(id: user) %></td> |
+          <% unless user.admin %>
+            <td><%= link_to 'Destroy', user_path(id:user), method: :delete, data: { confirm: 'Are you sure?' } %></td> |
+          <% end %>
+        <% end %>
+      </small>
+    </p>
+  </div>
+</div>

@@ -1,0 +1,31 @@
+<h4>Search</h4>
+<%= form_tag(users_index_path(per_page: @per_page), {method: :get , :class => "form form-horizontal"} ) do %>
+  <%= text_field_tag(:search, params[:search]) %>
+  <%= hidden_field_tag(:per_page, @per_page) %>
+  <%= submit_tag("Search") %>
+<% end %>
+<br>
+
+<h1>Users</h1>
+<div class="container-fluid">
+  <div class="row">
+    <div class="digg_pagination">
+      <%= will_paginate(@users) %>
+      <label>Per Page</label>
+      <%= link_to_if(@per_page != "5" , "5", users_index_path(:per_page =>5,:search => params[:search]), method: :get)%>
+      <%= link_to_if(@per_page != "10", "10", users_index_path(:per_page =>10,:search => params[:search]), method: :get)%>
+    </div>
+  </div>
+
+  <div>
+    <% @users.each_slice(4) do |users| %>
+      <div class="row"  style="align-items: start">
+        <% users.each do |user|%>
+          <div class="col-md-3">
+            <%= render 'users/card', user: user %>
+          </div>
+        <%end %>
+      </div>
+    <% end %>
+  </div>
+</div>
