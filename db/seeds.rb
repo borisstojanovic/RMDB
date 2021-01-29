@@ -9,13 +9,11 @@
 
 require "faker"
 
-begin
+unless User.find_by(email: 'admin@example.com')
   User.create!(email: 'admin@example.com',
                password: 'password',
                password_confirmation: 'password',
-               admin: true) if User.count.zero?
-rescue => e
-  puts "Error #{e.message}"
+               admin: true)
 end
 
 30.times do |_i|
