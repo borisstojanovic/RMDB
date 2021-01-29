@@ -74,7 +74,7 @@ class ReviewsController < ApplicationController
         helpful.is_helpful = type
         helpful.save
       end
-      redirect_to movie_url(@movie), notice: "Review marked as helpful"
+      redirect_back fallback_location: root_path, notice: "Review marked as helpful"
 
     elsif type == "unhelpful"
       helpful = Helpful.where(user_id: current_user.id, review_id: @review.id)
@@ -87,10 +87,10 @@ class ReviewsController < ApplicationController
         helpful.is_helpful = type
         helpful.save
       end
-      redirect_to movie_url(@movie), notice: "Review marked as unhelpful"
+      redirect_back fallback_location: root_path, notice: "Review marked as unhelpful"
     else
       # Type missing, nothing happens
-      redirect_to movie_url(@movie), notice: 'Nothing happened.'
+      redirect_back fallback_location: root_path, notice: 'Nothing happened.'
     end
   end
 

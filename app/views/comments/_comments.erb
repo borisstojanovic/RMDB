@@ -1,16 +1,6 @@
 <div class="row">
   <div class="col-3">
     <div class="row">
-      <% if false %>
-      <% if comment.user.avatar.attached? %>
-        <%= image_tag(comment.user.avatar, class:'comment-avatar') %>
-      <% else %>
-
-        <%= image_tag("/default_profile.png", class:'comment-avatar') %>
-          <% end %>
-      <% end %>
-    </div>
-    <div class="row">
       <div class="comment-timestamp" id="edit-history-text-<%= comment.id%>">
         <%= render 'comments/edit_history_text', comment: comment%>
       </div>
@@ -21,7 +11,7 @@
     <div class="row">
       <div class="col-8">
         <div class="comment-username">
-          <%= comment.user.username%>
+          <%= link_to comment.user.username, user_path(id: comment.user.id), method: :get%>
         </div>
         <div class="comment-number">
           #<%= comment.comment_number%>
