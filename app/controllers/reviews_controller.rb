@@ -8,6 +8,10 @@ class ReviewsController < ApplicationController
     @review = Review.new(review_params)
     @review.user = current_user
     @review.movie = @movie
+    if @review.score
+    else
+      @review.score = 0
+    end
     respond_to do |format|
       if @review.save
         format.html { redirect_to movie_path(@movie), notice: 'Review was successfully created.' }
@@ -96,11 +100,19 @@ class ReviewsController < ApplicationController
   end
 
   def set_review
-    @review = Review.find(params[:id])
+    begin
+      @review = Review.find(params[:id])
+    rescue => e
+      redirect_back fallback_location: root_path
+    end
   end
 
   def set_movie
-    @movie = Movie.friendly.find(params[:movie_id])
+    begin
+      @movie = Movie.friendly.find(params[:movie_id])
+    rescue => e
+      redirect_back fallback_location: root_path
+    end
   end
 
 end

@@ -15,6 +15,11 @@
       <li class="nav-item">
         <a class="nav-link" href="<%= movies_path %> ">All Movies</a>
       </li>
+      <% if current_user and !current_user.admin %>
+        <li class="nav-item">
+          <a class="nav-link" href="<%= favorites_path %>"> Favorite Movies</a>
+        </li>
+      <% end %>
       <li class="nav-item">
         <a class="nav-link" href="<%= articles_path %> ">News</a>
       </li>

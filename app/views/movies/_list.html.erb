@@ -1,0 +1,19 @@
+<h1>Movies</h1>
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="digg_pagination">
+      <%= will_paginate(movies, :container => false) %>
+    </div>
+  </div>
+
+  <div>
+    <% movies.each_slice(4) do |movies| %>
+      <div class="row">
+        <% movies.each do |movie|%>
+          <%= render 'movies/show', movie: movie %>
+        <%end %>
+      </div>
+    <% end %>
+  </div>
+</div>

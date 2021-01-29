@@ -43,6 +43,7 @@ if Movie.count.zero?
     movie.title = Faker::Lorem.sentence(word_count: 1, random_words_to_add: 2)
     movie.description = Faker::Lorem.paragraph_by_chars(number: 200)
     movie.release_date = Faker::Date.between(from: '1960-09-23', to: '2021-09-25')
+    movie.duration = (Date.today.beginning_of_day + rand(0..2).hour + rand(1..60).minutes).to_datetime
     movie.thumbnail.attach(io: URI.open('http://picsum.photos/640/480'), filename: "#{i}_thumbnail.jpg")
     movie.banner.attach(io: URI.open('http://picsum.photos/1920/1080'), filename: "#{i}_banner.jpg")
     movie.views = Faker::Number.between(from: 1, to: 5000)
@@ -52,6 +53,10 @@ if Movie.count.zero?
       review.body = Faker::Lorem.paragraph_by_chars(number: 1500)
       review.user = User.find(2 + pseudo_rng.rand(10))
       review.score = pseudo_rng.rand(5)
+      if review.score
+      else
+        review.score = 0
+      end
       review.movie = movie
       review.save
       (2 + pseudo_rng.rand(8)).times do |_l|

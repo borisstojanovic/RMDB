@@ -23,6 +23,9 @@
     <%= f.label :banner%>
     <%= f.file_field :banner %>
     <br>
+    <%= f.label "Duration: " %>
+    <%= f.time_select :duration, value: :duration, :default => Time.current, include_seconds: true %>
+    <br>
     <%= f.label "Summary: "%>
     <%= f.rich_text_area :description %>
   </div>

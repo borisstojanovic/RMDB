@@ -11,18 +11,30 @@
       </h1>
       <p class="lead">
         <label>Release Date: </label>
-        <%= @movie.release_date.strftime("%A, %B %e, %Y") %> | <%= pluralize(@movie.views, "View") %> |
-        <%= pluralize(@num_reviews, "Reviews") %> |
+        <%= @movie.release_date.strftime("%A, %B %e, %Y") %>  |
         <% if current_user&.admin%>
-          <%= link_to "Delete", @movie, method: :delete %>
+          <%= link_to "Delete", @movie, method: :delete %> |
+          <%= link_to "Edit", edit_movie_path(id: @movie), method: :get %> |
         <% end %>
+      </p>
+      <p class="lead">
+        <label>Length: </label>
+        <%= @movie.duration.strftime("%-Hh %Mmin") %>
+      </p>
+      <p class="lead">
+        <%= pluralize(@movie.views, "View") %>
+      </p>
+      <p class="lead">
+        <%= pluralize(@num_reviews, "Reviews") %> |
+        <label>Average rating: </label>
+        <%= avg_rating(@movie) %>
+        <span class="fa fa-star"></span>
       </p>
       <hr class="my-4" />
       <div class="movie_body">
         <%= @movie.description %>
       </div>
       <div>
-
         <% if @movie.director %>
           <br>
           <label>Director: </label>

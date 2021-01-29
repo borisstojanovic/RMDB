@@ -1,7 +1,7 @@
 class MoviesController < ApplicationController
   before_action :set_movie, only: %i[ show edit update destroy role direct ]
   before_action :authenticate_user!, except: [:index, :show]
-  before_action :is_authorized!, except: [:index, :show, :favorite]
+  before_action :is_authorized!, except: [:index, :show, :favorite, :favorites]
 
   # GET /movies or /movies.json
   def index
@@ -62,21 +62,33 @@ class MoviesController < ApplicationController
     end
   end
 
+  def favorites
+    @movies = Movie.search(params[:search]).order('created_at DESC')
+
+    movies = []
+    @movies.each { |movie|
+      if helpers.is_favorite(movie)
+        movies.append(movie.id)
+      end
+    }
+    @movies = Movie.friendly.find(movies).paginate(page: params[:page])
+  end
+
   # Set favorite movie for current user
   def favorite
     @movie = Movie.find(params[:movie])
     type = params[:type]
     if type == "favorite"
       current_user.favorites << @movie
-      redirect_to movies_url, notice: "You favorited #{@movie.title}"
+      redirect_back fallback_location: root_path, notice: "You favorited #{@movie.title}"
 
     elsif type == "unfavorite"
       current_user.favorites.delete(@movie)
-      redirect_to movies_url, notice: "Unfavorited #{@movie.title}"
+      redirect_back fallback_location: root_path, notice: "Unfavorited #{@movie.title}"
 
     else
       # Type missing, nothing happens
-      redirect_to movies_url, notice: 'Nothing happened.'
+      redirect_back fallback_location: root_path, notice: 'Nothing happened.'
     end
   end
 
@@ -98,12 +110,17 @@ class MoviesController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_movie
-      @movie = Movie.friendly.find(params[:id])
+      begin
+        @movie = Movie.friendly.find(params[:id])
+      rescue => e
+        redirect_back fallback_location: root_path
+      end
+
     end
 
     # Only allow a list of trusted parameters through.
     def movie_params
-      params.require(:movie).permit(:release_date, :title, :views, :description, :thumbnail, :banner)
+      params.require(:movie).permit(:release_date, :title, :views, :description, :thumbnail, :banner, :duration)
     end
 
 end

@@ -63,7 +63,11 @@ class ArticlesController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_article
-      @article = Article.friendly.find(params[:id])
+      begin
+        @article = Article.friendly.find(params[:id])
+      rescue => e
+        redirect_back fallback_location: root_path
+      end
     end
 
     # Only allow a list of trusted parameters through.

@@ -20,6 +20,7 @@ Rails.application.routes.draw do
   root 'movies#index'
   get 'about', to: 'pages#about'
   get 'history', to: 'comments#history'
+  get 'favorites', to: 'movies#favorites'
   put 'favorite', to: 'movies#favorite'
   put 'helpful', to: 'reviews#helpful'
   put 'role', to: 'movies#role'

@@ -11,9 +11,13 @@
       <p class="card-text">
         <small class="text-muted">
           <%= movie.release_date.strftime("%A, %B %e, %Y") %>|
+          <label>Average rating: </label>
+          <%= avg_rating(movie) %>
+          <span class="fa fa-star"></span> |
           <%= pluralize(movie.views, "View") %> |
           <% if current_user&.admin %>
-            <%= link_to "Delete", movie, method: :delete %>
+            <%= link_to "Delete", movie, method: :delete %>|
+            <%= link_to "Edit", edit_movie_path(id: movie), method: :get %>|
           <%else if current_user %>
               <% if !is_favorite(movie) %>
                 <%= link_to "Favorite",  favorite_path(movie: movie.id, type: "favorite"), method: :put %>

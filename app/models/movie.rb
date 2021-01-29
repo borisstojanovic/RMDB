@@ -16,6 +16,7 @@ class Movie < ApplicationRecord
   validates :title, length: { minimum: 1 }
   validates :description, length: { minimum: 24 }
   validates_date :release_date
+  validates :duration, presence: true
 
   validates :thumbnail, attached: true, content_type: %w[image/png image/jpg image/jpeg]
   validates :banner, attached: true, content_type: %w[image/png image/jpg image/jpeg]
