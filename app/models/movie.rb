@@ -8,8 +8,8 @@ class Movie < ApplicationRecord
   has_one :director, dependent: :destroy
   has_one :directed_by, through: :director, source: :actor
 
-  has_one_attached :thumbnail
-  has_one_attached :banner
+  #cloudinary setup
+  mount_uploader :thumbnail, AvatarUploader
 
   has_rich_text :description
 
@@ -17,9 +17,6 @@ class Movie < ApplicationRecord
   validates :description, length: { minimum: 24 }
   validates_date :release_date
   validates :duration, presence: true
-
-  validates :thumbnail, attached: true, content_type: %w[image/png image/jpg image/jpeg]
-  validates :banner, attached: true, content_type: %w[image/png image/jpg image/jpeg]
 
   self.per_page = 8
   extend FriendlyId

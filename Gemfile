@@ -35,6 +35,10 @@ gem 'active_storage_validations'
 gem 'validates_timeliness', '~> 5.0.0.beta1'
 gem "font-awesome-rails"
 gem 'jquery-rails'
+gem 'carrierwave'
+gem 'carrierwave-imageoptimizer'
+gem 'mini_magick'
+gem 'cloudinary'
 #my gems end
 
 # Reduces boot times through caching; required in config/boot.rb

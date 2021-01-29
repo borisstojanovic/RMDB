@@ -16,10 +16,8 @@
     <%= f.text_field :title, class:'form-control string' %>
     <br>
     <%= f.label :thumbnail %>
+    <%= f.hidden_field :thumbnail_cache %>
     <%= f.file_field :thumbnail %>
-    <br>
-    <%= f.label :banner%>
-    <%= f.file_field :banner %>
     <br>
     <%= f.label "Body: "%>
     <%= f.rich_text_area :body %>

@@ -18,10 +18,8 @@
     <%= f.date_select :release_date, class:'form-control date', start_year: Date.today.year, end_year: Date.today.year - 100 %>
     <br>
     <%= f.label :thumbnail %>
+    <%= f.hidden_field :thumbnail_cache %>
     <%= f.file_field :thumbnail %>
-    <br>
-    <%= f.label :banner%>
-    <%= f.file_field :banner %>
     <br>
     <%= f.label "Duration: " %>
     <%= f.time_select :duration, value: :duration, :default => Time.current, include_seconds: true %>

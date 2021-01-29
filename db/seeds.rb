@@ -25,12 +25,11 @@ end
 
 pseudo_rng = Random.new
 
-25.times do |i|
+25.times do |_i|
   article = Article.new
   article.title = Faker::Lorem.sentence(word_count: 3, random_words_to_add: 7)
   article.body = Faker::Lorem.paragraph_by_chars(number: 1500)
-  article.thumbnail.attach(io: URI.open('http://picsum.photos/640/480'), filename: "#{i}_thumbnail.jpg")
-  article.banner.attach(io: URI.open('http://picsum.photos/1920/1080'), filename: "#{i}_banner.jpg")
+  article.remote_thumbnail_url = 'http://picsum.photos/1920/1080'
   article.views = Faker::Number.between(from: 1, to: 5000)
   article.save
 end
@@ -42,8 +41,7 @@ if Movie.count.zero?
     movie.description = Faker::Lorem.paragraph_by_chars(number: 200)
     movie.release_date = Faker::Date.between(from: '1960-09-23', to: '2021-09-25')
     movie.duration = (Date.today.beginning_of_day + rand(0..2).hour + rand(1..60).minutes).to_datetime
-    movie.thumbnail.attach(io: URI.open('http://picsum.photos/640/480'), filename: "#{i}_thumbnail.jpg")
-    movie.banner.attach(io: URI.open('http://picsum.photos/1920/1080'), filename: "#{i}_banner.jpg")
+    movie.remote_thumbnail_url = 'http://picsum.photos/1920/1080'
     movie.views = Faker::Number.between(from: 1, to: 5000)
     movie.save
     (2 + pseudo_rng.rand(8)).times do |_j|

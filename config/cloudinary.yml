@@ -1,0 +1,19 @@
+---
+development:
+  cloud_name: dylv4eyvu
+  api_key: '144814796736196'
+  api_secret: ASxcbcAqr-61dYqprJ5izzIdSoM
+  enhance_image_tag: true
+  static_file_support: false
+production:
+  cloud_name: dylv4eyvu
+  api_key: '144814796736196'
+  api_secret: ASxcbcAqr-61dYqprJ5izzIdSoM
+  enhance_image_tag: true
+  static_file_support: true
+test:
+  cloud_name: dylv4eyvu
+  api_key: '144814796736196'
+  api_secret: ASxcbcAqr-61dYqprJ5izzIdSoM
+  enhance_image_tag: true
+  static_file_support: false

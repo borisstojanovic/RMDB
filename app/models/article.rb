@@ -1,6 +1,7 @@
 class Article < ApplicationRecord
-  has_one_attached :thumbnail
-  has_one_attached :banner
+
+  #cloudinary setup
+  mount_uploader :thumbnail, AvatarUploader
 
   has_rich_text :body
 
@@ -10,10 +11,6 @@ class Article < ApplicationRecord
   self.per_page = 6
   extend FriendlyId
   friendly_id :title, use: :slugged
-
-  def optimized_article_image(image,x,y)
-    image.variant(resize_to_fill: [x, y]).processed
-  end
 
   def self.search_article(search)
     if search
