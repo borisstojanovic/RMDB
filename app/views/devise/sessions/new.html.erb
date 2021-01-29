@@ -1,5 +1,5 @@
 <h2>Log in</h2>
-
+<p id="notice"><%= notice %></p>
 <%= simple_form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
   <div class="form-inputs">
     <%= f.input :email,
@@ -16,5 +16,16 @@
     <%= f.button :submit, "Log in" %>
   </div>
 <% end %>
-
+<div class="row">
+  <% if notice %>
+    <div data-alert class="alert-box info radius">
+      <%= notice %><%= link_to "X", '#', :class => 'close' %>
+    </div>
+  <% end %>
+  <% if alert %>
+    <div data-alert class="alert-box alert radius">
+      <%= alert %><%= link_to "X", '#', :class => 'close' %>
+    </div>
+  <% end %>
+</div>
 <%= render "devise/shared/links" %>
